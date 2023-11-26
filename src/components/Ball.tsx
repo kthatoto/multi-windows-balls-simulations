@@ -1,4 +1,3 @@
-import "@/styles/ball.css";
 import { useState } from "react";
 import { useInterval } from "@/hooks/useInterval";
 import { moveCircle } from "@/utils/moveCircle";
