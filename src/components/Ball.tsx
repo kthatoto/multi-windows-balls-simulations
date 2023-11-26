@@ -1,3 +1,4 @@
+import styled from "styled-components";
 import { useState } from "react";
 import { useInterval } from "@/hooks/useInterval";
 import { moveCircle } from "@/utils/moveCircle";
@@ -19,8 +20,7 @@ const Ball = () => {
   );
 
   return (
-    <div
-      className="circle"
+    <Container
       style={{
         width: radius * 2,
         height: radius * 2,
@@ -32,3 +32,9 @@ const Ball = () => {
 };
 
 export default Ball;
+
+const Container = styled.div`
+  position: absolute;
+  border-radius: 50%;
+  border: 3px solid red;
+`;
