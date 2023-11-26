@@ -3,14 +3,14 @@ import { useInterval } from "@/hooks/useInterval";
 import { moveCircle } from "@/utils/moveCircle";
 
 const Ball = () => {
-  const [radius] = useState(10 + Math.random() * 30);
+  const [radius] = useState(10 + Math.random() * 40);
   const [position, setPosition] = useState({
-    x: radius + Math.random() * 10,
-    y: radius + Math.random() * 10,
+    x: radius + Math.random() * 100,
+    y: radius + Math.random() * 100,
   });
   const [velocity, setVelocity] = useState({
-    x: Math.random() * 3,
-    y: Math.random() * 3,
+    x: 2 + Math.random() * 5,
+    y: 2 + Math.random() * 5,
   });
 
   useInterval(
