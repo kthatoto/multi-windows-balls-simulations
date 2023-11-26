@@ -1,11 +1,17 @@
 import styled from "styled-components";
+import Ball from "@/components/Ball";
 
 const Index = () => {
   return (
-    <h1>aaa</h1>
+    <Container>
+      <Ball />
+    </Container>
   );
 };
 export default Index;
 
 const Container = styled.div`
+  width: 100%;
+  height: 100vh;
+  background-color: #eee;
 `;
