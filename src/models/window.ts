@@ -8,10 +8,6 @@ const getWindows = (): Windows => {
   return windows;
 };
 
-export const getWindowBy = (windowId: string) => {
-  return getWindows()[windowId];
-};
-
 const updateWindows = (windows: Windows) => {
   localStorage[LS_KEY_WINDOWS] = JSON.stringify(windows);
 };
@@ -20,7 +16,7 @@ export const touchWindow = (windowId: string) => {
   const windows = getWindows();
   const selfWindow = windows[windowId];
 
-  windows[windowId] = {
+  const newWindow = {
     id: windowId,
     pos: { x: window.screenX, y: window.screenY },
     size: { width: window.outerWidth, height: window.outerHeight },
@@ -30,28 +26,31 @@ export const touchWindow = (windowId: string) => {
     collisionIds: selfWindow ? selfWindow.collisionIds : [],
   };
 
+  let newMainWindowId = null;
   const windowsArray = Object.values(windows);
   const mainExists = windowsArray.some((win: Window) => win.main);
-  if (!mainExists) {
+  if (!mainExists && !newWindow.main) {
     const lowestOrderWindow = windowsArray.reduce((lowWin: Window | null, win: Window) => {
       if (lowWin === null) return win;
       return lowWin.order < win.order ? win : lowWin;
     }, null);
     if (lowestOrderWindow !== null) {
-      windows[lowestOrderWindow.id] = {
-        ...lowestOrderWindow,
-        main: true,
-      };
+      newMainWindowId = lowestOrderWindow.id;
     }
   }
 
-  updateWindows(windows);
-  return windows[windowId];
+  const latestWindows = getWindows();
+  if (newMainWindowId) latestWindows[newMainWindowId].main = true;
+  updateWindows({
+    ...latestWindows,
+    [windowId]: newWindow,
+  });
+  return newWindow;
 };
 
 export const clearUnusedWindows = () => {
   const windows = getWindows();
-  const border = Date.now() - 1000; // 1秒前
+  const border = Date.now() - 2000; // 2秒前
   const unusedWindowIds = Object.values(windows).reduce((ids: string[], win: Window) => {
     if (border > win.lastUpdatedAt) ids.push(win.id);
     return ids;
