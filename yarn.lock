@@ -544,10 +544,15 @@ dexie-react-hooks@^1.1.7:
   resolved "https://registry.yarnpkg.com/dexie-react-hooks/-/dexie-react-hooks-1.1.7.tgz#75bd92a609a7c3dc3643e2fd21e7db5df6df923b"
   integrity sha512-Lwv5W0Hk+uOW3kGnsU9GZoR1er1B7WQ5DSdonoNG+focTNeJbHW6vi6nBoX534VKI3/uwHebYzSw1fwY6a7mTw==
 
-dexie@*, dexie@^3.2.4:
+dexie@*:
   version "3.2.4"
   resolved "https://registry.yarnpkg.com/dexie/-/dexie-3.2.4.tgz#b22a9729be1102acb2eee16102ea6e2bc76454cf"
   integrity sha512-VKoTQRSv7+RnffpOJ3Dh6ozknBqzWw/F3iqMdsZg958R0AS8AnY9x9d1lbwENr0gzeGJHXKcGhAMRaqys6SxqA==
+
+dexie@^4.0.1-beta.2:
+  version "4.0.1-beta.2"
+  resolved "https://registry.yarnpkg.com/dexie/-/dexie-4.0.1-beta.2.tgz#0258e2477b92d1779b74cd20544f197aaf1a20a9"
+  integrity sha512-JYOH1XsskTSWu1I6PrKu72xUOmDphdEEbQDYslPq4cC4kRcQapAZn3vpiWN4XgOXuvbhe0bfC1OkPS46PHVVLw==
 
 dir-glob@^3.0.1:
   version "3.0.1"
