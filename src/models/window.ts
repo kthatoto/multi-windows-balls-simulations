@@ -8,6 +8,10 @@ const getWindows = (): Windows => {
   return windows;
 };
 
+export const getWindowBy = (windowId: string) => {
+  return getWindows()[windowId];
+};
+
 const updateWindows = (windows: Windows) => {
   localStorage[LS_KEY_WINDOWS] = JSON.stringify(windows);
 };
@@ -42,7 +46,7 @@ export const touchWindow = (windowId: string) => {
   }
 
   updateWindows(windows);
-  return windows[windowId].main;
+  return windows[windowId];
 };
 
 export const clearUnusedWindows = () => {
