@@ -49,6 +49,5 @@ export const clearUnusedWindows = () => {
   }, []);
 
   unusedWindowIds.forEach((id: string) => delete windows[id]);
-  console.log(unusedWindowIds);
   localStorage[LS_KEY_WINDOWS] = JSON.stringify(windows);
 };
