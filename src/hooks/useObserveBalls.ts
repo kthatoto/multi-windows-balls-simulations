@@ -11,7 +11,7 @@ export const useObserveBalls = (win: Window) => {
       const _balls = await getBalls();
       setBalls(_balls);
 
-      if (win.main) {
+      if (win?.main) {
       }
     },
     100

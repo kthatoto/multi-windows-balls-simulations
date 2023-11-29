@@ -10,7 +10,7 @@ import { Window } from "@/types";
 
 export const useObserveWindow = () => {
   const [windowId] = useState(Math.random().toString(32).substring(2));
-  const [win, setWin] = useState({} as Window);
+  const [win, setWin] = useState<Window | undefined>();
 
   useEffect(() => {
     clearUnusedWindows();
