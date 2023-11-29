@@ -11,12 +11,9 @@ export const useObserveWindow = () => {
 
   useInterval(
     () => {
+      clearUnusedWindows();
       const _main = touchWindow(windowId);
       setMain(_main);
-
-      if (_main) {
-        clearUnusedWindows();
-      }
     },
     100
   );
