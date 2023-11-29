@@ -25,10 +25,6 @@ export interface Window {
   updatedAt: number;
 }
 
-export interface Windows {
-  [id: string]: Window;
-}
-
 export interface Ball {
   id: string;
   radius: number;

@@ -27,7 +27,7 @@ export const useObserveWindow = () => {
         updateWindowsCollision();
       }
     },
-    500
+    1000
   );
 
   return { win };

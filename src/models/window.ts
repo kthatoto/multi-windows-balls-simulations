@@ -1,5 +1,5 @@
 import { db } from "@/database";
-import { Window, Windows } from "@/types";
+import { Window } from "@/types";
 
 export const touchWindow = async (windowId: string) => {
   const existingWindow = await db.windows.get(windowId);
