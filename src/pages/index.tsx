@@ -2,12 +2,10 @@ import Ball from "@/components/Ball";
 import { useObserveWindow } from "@/hooks/useObserveWindow";
 
 const Index = () => {
-  const { main } = useObserveWindow();
+  useObserveWindow();
 
   return (
-    <div className="app">
-      {[...Array(5)].map((_, i) => <Ball key={i} />)}
-    </div>
+    <div className="app"></div>
   );
 };
 export default Index;
