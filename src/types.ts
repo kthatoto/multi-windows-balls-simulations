@@ -19,10 +19,10 @@ export interface Window {
   id: string;
   pos: Vector;
   size: Size;
-  lastUpdatedAt: number;
-  order: number;
-  main: boolean;
+  main: 0 | 1;
   collisionIds: string[];
+  createdAt: number;
+  updatedAt: number;
 }
 
 export interface Windows {

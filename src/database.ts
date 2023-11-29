@@ -7,7 +7,7 @@ export class Database extends Dexie {
   constructor() {
     super('MultiWindowsBallsSimulations');
     this.version(1).stores({
-      windows: 'id, lastUpdatedAt'
+      windows: 'id, main, createdAt, updatedAt'
     });
   }
 }

@@ -1,88 +1,59 @@
+import { db } from "@/database";
 import { Window, Windows } from "@/types";
 
-const LS_KEY_WINDOWS = "mulwin-windows";
-
-const getWindows = (): Windows => {
-  const lsWindows = localStorage[LS_KEY_WINDOWS];
-  const windows = lsWindows ? JSON.parse(lsWindows) : {};
-  return windows;
-};
-
-const updateWindows = (windows: Windows) => {
-  localStorage[LS_KEY_WINDOWS] = JSON.stringify(windows);
-};
-
-export const touchWindow = (windowId: string) => {
-  const windows = getWindows();
-  const selfWindow = windows[windowId];
-
+export const touchWindow = async (windowId: string) => {
+  const existingWindow = await db.windows.get(windowId);
+  if (existingWindow) {
+    const newWindow = {
+      ...existingWindow,
+      pos: { x: window.screenX, y: window.screenY },
+      size: { width: window.outerWidth, height: window.outerHeight },
+      updatedAt: Date.now(),
+    }
+    await db.windows.put(newWindow);
+    return newWindow;
+  }
   const newWindow = {
     id: windowId,
     pos: { x: window.screenX, y: window.screenY },
     size: { width: window.outerWidth, height: window.outerHeight },
-    lastUpdatedAt: Date.now(),
-    order: selfWindow ? selfWindow.order : Math.max(...Object.values(windows).map((win) => win.order), 0) + 1,
-    main: selfWindow ? selfWindow.main : Object.keys(windows).length === 0,
-    collisionIds: selfWindow ? selfWindow.collisionIds : [],
+    main: 0 as const,
+    collisionIds: [],
+    createdAt: Date.now(),
+    updatedAt: Date.now(),
   };
-
-  let newMainWindowId = null;
-  const windowsArray = Object.values(windows);
-  const mainExists = windowsArray.some((win: Window) => win.main);
-  if (!mainExists && !newWindow.main) {
-    const lowestOrderWindow = windowsArray.reduce((lowWin: Window | null, win: Window) => {
-      if (lowWin === null) return win;
-      return lowWin.order < win.order ? win : lowWin;
-    }, null);
-    if (lowestOrderWindow !== null) {
-      newMainWindowId = lowestOrderWindow.id;
-    }
-  }
-
-  const latestWindows = getWindows();
-  if (newMainWindowId) latestWindows[newMainWindowId].main = true;
-  updateWindows({
-    ...latestWindows,
-    [windowId]: newWindow,
-  });
+  await db.windows.put(newWindow);
   return newWindow;
 };
 
-export const clearUnusedWindows = () => {
-  const windows = getWindows();
-  const border = Date.now() - 2000; // 2秒前
-  const unusedWindowIds = Object.values(windows).reduce((ids: string[], win: Window) => {
-    if (border > win.lastUpdatedAt) ids.push(win.id);
-    return ids;
-  }, []);
-
-  unusedWindowIds.forEach((id: string) => delete windows[id]);
-  updateWindows(windows);
+export const updateMainWindowIfNeeded = async () => {
+  const mainExists = await db.windows.where('main').equals(1).count() > 0;
+  if (mainExists) return;
+  const newMainWindow = await db.windows.orderBy('createdAt').first();
+  if (!newMainWindow) return;
+  await db.windows.update(newMainWindow.id, { main: 1 });
 };
 
-export const updateWindowsCollision = () => {
-  const windows = getWindows();
-  const windowsArray = Object.values(windows).map((win: Window) => ({
+export const clearUnusedWindows = () => {
+  const border = Date.now() - 1000;
+  db.windows.where('updatedAt').below(border).delete();
+};
+
+export const updateWindowsCollision = async () => {
+  const allWindows = (await db.windows.toArray()).map((win) => ({
     ...win,
     collisionIds: [] as string[],
   }));
-
-  windowsArray.forEach((win1: Window, i: number, array: Window[]) => {
+  allWindows.forEach((win1: Window, i: number, array: Window[]) => {
     for (let j = i + 1; j < array.length; j++) {
       const win2 = array[j];
       if (windowsCollision(win1, win2)) {
-        windowsArray[i].collisionIds.push(win2.id);
-        windowsArray[j].collisionIds.push(win1.id);
+        allWindows[i].collisionIds.push(win2.id);
+        allWindows[j].collisionIds.push(win1.id);
       }
     }
   });
-
-  updateWindows(
-    windowsArray.reduce((windows: Windows, win: Window) => {
-      windows[win.id] = win;
-      return windows;
-    }, {} as Windows)
-  );
+  await db.windows.bulkPut(allWindows);
 };
 
 const windowsCollision = (win1: Window, win2: Window) => {

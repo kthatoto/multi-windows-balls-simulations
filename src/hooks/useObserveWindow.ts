@@ -1,6 +1,11 @@
 import { useEffect, useState } from "react";
 import { useInterval } from "@/hooks/useInterval";
-import { touchWindow, clearUnusedWindows, updateWindowsCollision } from "@/models/window";
+import {
+  touchWindow,
+  clearUnusedWindows,
+  updateMainWindowIfNeeded,
+  updateWindowsCollision,
+} from "@/models/window";
 import { Window } from "@/types";
 
 export const useObserveWindow = () => {
@@ -9,12 +14,14 @@ export const useObserveWindow = () => {
 
   useEffect(() => {
     clearUnusedWindows();
+    updateMainWindowIfNeeded();
   }, []);
 
   useInterval(
-    () => {
+    async () => {
       clearUnusedWindows();
-      const touchedWindow = touchWindow(windowId);
+      updateMainWindowIfNeeded();
+      const touchedWindow = await touchWindow(windowId);
       setWin(touchedWindow);
       if (touchedWindow.main) {
         updateWindowsCollision();
