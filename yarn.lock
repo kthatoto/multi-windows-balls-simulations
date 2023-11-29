@@ -155,6 +155,13 @@
   dependencies:
     tslib "^2.4.0"
 
+"@types/dexie@^1.3.1":
+  version "1.3.1"
+  resolved "https://registry.yarnpkg.com/@types/dexie/-/dexie-1.3.1.tgz#accca262f9071f1ed963a40255fcf4bc7af67e15"
+  integrity sha512-f4Gpv89MCwEl1r9LbLLHXzT2qduVUNfyj/sINrY7MXqZvSEGYZwEWLIUAnVD44YPt5/0tkNSK6wbyhpb9iF47A==
+  dependencies:
+    dexie "*"
+
 "@types/json5@^0.0.29":
   version "0.0.29"
   resolved "https://registry.yarnpkg.com/@types/json5/-/json5-0.0.29.tgz#ee28707ae94e11d2b827bcbe5270bcea7f3e71ee"
@@ -537,7 +544,7 @@ dexie-react-hooks@^1.1.7:
   resolved "https://registry.yarnpkg.com/dexie-react-hooks/-/dexie-react-hooks-1.1.7.tgz#75bd92a609a7c3dc3643e2fd21e7db5df6df923b"
   integrity sha512-Lwv5W0Hk+uOW3kGnsU9GZoR1er1B7WQ5DSdonoNG+focTNeJbHW6vi6nBoX534VKI3/uwHebYzSw1fwY6a7mTw==
 
-dexie@^3.2.4:
+dexie@*, dexie@^3.2.4:
   version "3.2.4"
   resolved "https://registry.yarnpkg.com/dexie/-/dexie-3.2.4.tgz#b22a9729be1102acb2eee16102ea6e2bc76454cf"
   integrity sha512-VKoTQRSv7+RnffpOJ3Dh6ozknBqzWw/F3iqMdsZg958R0AS8AnY9x9d1lbwENr0gzeGJHXKcGhAMRaqys6SxqA==
