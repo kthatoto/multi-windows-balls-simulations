@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import {upsertWindow} from "@/models/window";
+import { upsertWindow, removeWindow } from "@/models/window";
 
 export const useSetup = () => {
   const [main, setMain] = useState(false);
@@ -8,11 +8,13 @@ export const useSetup = () => {
   useEffect(() => {
     const main = upsertWindow({
       id: windowId,
-      pos: { x: window.screenX, y: window.screenY },
-      size: { width: window.outerWidth, height: window.outerHeight },
+      pos: {x: window.screenX, y: window.screenY},
+      size: {width: window.outerWidth, height: window.outerHeight},
+      lastUpdatedAt: (new Date()).toLocaleString(),
     });
     setMain(main);
 
+    return () => removeWindow(windowId);
   }, [windowId]);
 
   return { main };

@@ -20,6 +20,7 @@ export interface Window {
   pos: Vector;
   size: Size;
   main: boolean;
+  lastUpdatedAt: string;
 }
 
 export interface Windows {
