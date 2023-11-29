@@ -8,11 +8,14 @@ const getWindows = (): Windows => {
   return windows;
 };
 
-export const upsertWindow = (win: Omit<Window, "main">) => {
+export const touchWindow = (windowId: string) => {
   const windows = getWindows();
   const main = Object.keys(windows).length === 0;
-  windows[win.id] = {
-    ...win,
+  windows[windowId] = {
+    id: windowId,
+    pos: { x: window.screenX, y: window.screenY },
+    size: { width: window.outerWidth, height: window.outerHeight },
+    lastUpdatedAt: (new Date()).toLocaleString(),
     main,
   };
   localStorage[LS_KEY_WINDOWS] = JSON.stringify(windows);
