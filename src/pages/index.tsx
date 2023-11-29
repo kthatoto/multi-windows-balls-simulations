@@ -1,10 +1,8 @@
 import Ball from "@/components/Ball";
-import { useSetup } from "@/hooks/useSetup";
 import { useObserveWindow } from "@/hooks/useObserveWindow";
 
 const Index = () => {
-  const { main } = useSetup();
-  useObserveWindow();
+  const { main } = useObserveWindow();
 
   return (
     <div className="app">
