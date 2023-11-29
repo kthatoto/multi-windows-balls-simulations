@@ -9,8 +9,8 @@ const Ball = () => {
     y: radius + Math.random() * 100,
   });
   const [velocity, setVelocity] = useState({
-    x: 2 + Math.random() * 5,
-    y: 2 + Math.random() * 5,
+    x: 2 + Math.random() * 4,
+    y: 2 + Math.random() * 4,
   });
 
   useInterval(
