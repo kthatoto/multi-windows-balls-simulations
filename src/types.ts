@@ -30,4 +30,6 @@ export interface Ball {
   radius: number;
   pos: Vector;
   velocity: Vector;
+  createdAt: number;
+  updatedAt: number;
 }
