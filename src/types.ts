@@ -22,6 +22,7 @@ export interface Window {
   lastUpdatedAt: number;
   order: number;
   main: boolean;
+  collisionIds: string[];
 }
 
 export interface Windows {

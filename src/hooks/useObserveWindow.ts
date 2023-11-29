@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { useInterval } from "@/hooks/useInterval";
-import { touchWindow, clearUnusedWindows, updateWindowGroups } from "@/models/window";
+import { touchWindow, clearUnusedWindows, updateWindowsCollision } from "@/models/window";
 
 export const useObserveWindow = () => {
   const [windowId] = useState(Math.random().toString(32).substring(2));
@@ -15,7 +15,7 @@ export const useObserveWindow = () => {
       const _main = touchWindow(windowId);
       setMain(_main);
       if (_main) {
-        updateWindowGroups();
+        updateWindowsCollision();
       }
     },
     500
