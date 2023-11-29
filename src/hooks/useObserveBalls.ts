@@ -13,7 +13,7 @@ export const useObserveBalls = (win: Window) => {
       setBalls(_balls);
 
       if (win?.main) {
-        const newBalls = _balls.map((ball) => moveBall(ball))
+        const newBalls = _balls.map((ball) => moveBall(win, ball))
         updateBalls(newBalls);
       }
     },
