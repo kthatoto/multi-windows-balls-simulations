@@ -32,4 +32,5 @@ export interface Ball {
   velocity: Vector;
   createdAt: number;
   updatedAt: number;
+  currentWindowId?: string;
 }

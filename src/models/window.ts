@@ -1,6 +1,10 @@
 import { db } from "@/database";
 import { Window } from "@/types";
 
+export const getWindows = async () => {
+  return await db.windows.toArray();
+};
+
 export const touchWindow = async (windowId: string) => {
   const existingWindow = await db.windows.get(windowId);
   if (existingWindow) {

@@ -4,7 +4,7 @@ import { useInterval } from "@/hooks/useInterval";
 import { getBalls, updateBalls } from "@/models/ball";
 import { moveBall } from "@/utils/moveBall";
 
-export const useObserveBalls = (win: Window) => {
+export const useObserveBalls = (windows: Window[], currentWindow?: Window) => {
   const [balls, setBalls] = useState<Ball[]>([]);
 
   useInterval(
@@ -12,8 +12,8 @@ export const useObserveBalls = (win: Window) => {
       const _balls = await getBalls();
       setBalls(_balls);
 
-      if (win?.main) {
-        const newBalls = _balls.map((ball) => moveBall(win, ball))
+      if (currentWindow?.main) {
+        const newBalls = _balls.map((ball) => moveBall(windows, ball))
         updateBalls(newBalls);
       }
     },

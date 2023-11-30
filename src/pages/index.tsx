@@ -3,8 +3,8 @@ import { useObserveWindow } from "@/hooks/useObserveWindow";
 import { useObserveBalls } from "@/hooks/useObserveBalls";
 
 const Index = () => {
-  const { win } = useObserveWindow();
-  const { balls } = useObserveBalls(win);
+  const { win, windows } = useObserveWindow();
+  const { balls } = useObserveBalls(windows, win);
 
   return (
     <div className="app">
