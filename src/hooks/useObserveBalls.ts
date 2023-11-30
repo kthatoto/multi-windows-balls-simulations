@@ -15,7 +15,7 @@ export const useObserveBalls = (windows: Window[], currentWindow?: Window) => {
       if (currentWindow?.main) {
         const newBalls = _balls.map((ball) => moveBall(windows, ball))
         updateBalls(newBalls);
-        createBall();
+        // createBall();
       }
     },
     100
