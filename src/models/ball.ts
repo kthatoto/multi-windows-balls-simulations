@@ -12,8 +12,8 @@ export const updateBalls = async (balls: Ball[]) => {
 export const createBall = async () => {
   await db.balls.put({
     id: "ball",
-    radius: 20,
-    pos: { x: 100, y: 100 },
+    radius: 50,
+    pos: { x: 200, y: 200 },
     velocity: { x: 3, y: 1 },
     createdAt: (new Date(2023, 10, 30, 5, 3)).getTime(),
     updatedAt: Date.now(),
