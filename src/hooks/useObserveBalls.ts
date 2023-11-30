@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { Ball, Window } from "@/types";
 import { useInterval } from "@/hooks/useInterval";
-import { getBalls, updateBalls } from "@/models/ball";
+import { getBalls, updateBalls, createBall } from "@/models/ball";
 import { moveBall } from "@/utils/moveBall";
 
 export const useObserveBalls = (windows: Window[], currentWindow?: Window) => {
@@ -15,6 +15,7 @@ export const useObserveBalls = (windows: Window[], currentWindow?: Window) => {
       if (currentWindow?.main) {
         const newBalls = _balls.map((ball) => moveBall(windows, ball))
         updateBalls(newBalls);
+        createBall();
       }
     },
     100
