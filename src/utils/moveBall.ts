@@ -57,7 +57,7 @@ export const moveBall = (windows: Window[], ball: Ball) => {
 
   if (!win) return ball;
 
-  const { status } = windowCollision(newBall, win);
+  const { status, collision } = windowCollision(newBall, win);
   if (status === INNER) {
     return {
       ...newBall,
@@ -66,17 +66,29 @@ export const moveBall = (windows: Window[], ball: Ball) => {
     };
   } else if (status === BORDER_COLLISION) {
     /* 雑コード */
-    const newWindow = windows.find((w) => {
-      if (w.id === win.id) return false;
-      if (!win.collisionIds.includes(w.id)) return false;
-      return windowCollision(newBall, w).status === BORDER_COLLISION;
-    });
-
     const centerWindow = windows.find((w) =>
       w.pos.x <= newPos.x && newPos.x <= w.pos.x + w.size.width &&
       w.pos.y <= newPos.y && newPos.y <= w.pos.y + w.size.height
     );
     const currentWindowId = centerWindow?.id;
+
+    if (collision === COLLISION_VERTICAL) {
+      return {
+        ...newBall,
+        velocity: {
+          x: velocity.x,
+          y: -velocity.y,
+        },
+        currentWindowId,
+        updatedAt: Date.now(),
+      };
+    }
+
+    const newWindow = windows.find((w) => {
+      if (w.id === win.id) return false;
+      if (!win.collisionIds.includes(w.id)) return false;
+      return windowCollision(newBall, w).status === BORDER_COLLISION;
+    });
 
     if (!newWindow) {
       return {

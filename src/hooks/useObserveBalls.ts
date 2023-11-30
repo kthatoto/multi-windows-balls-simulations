@@ -18,7 +18,7 @@ export const useObserveBalls = (windows: Window[], currentWindow?: Window) => {
         // createBall();
       }
     },
-    100
+    10
   );
 
   return { balls };
