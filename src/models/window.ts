@@ -10,10 +10,10 @@ export const touchWindow = async (windowId: string) => {
   if (existingWindow) {
     const newWindow = {
       ...existingWindow,
-      pos: { x: window.screenX, y: window.screenY },
-      size: { width: window.outerWidth, height: window.outerHeight },
+      pos: {x: window.screenX, y: window.screenY},
+      size: {width: window.outerWidth, height: window.outerHeight},
       updatedAt: Date.now(),
-    }
+    };
     await db.windows.put(newWindow);
     return newWindow;
   }
