@@ -1,4 +1,5 @@
 import { Ball, Window } from "@/types";
+import { clearAllBalls, addBall } from "@/models/ball";
 
 const Console = (props: { win?: Window, windows: Window[], balls: Ball[] }) => {
   const { win, windows, balls } = props;
@@ -15,6 +16,10 @@ const Console = (props: { win?: Window, windows: Window[], balls: Ball[] }) => {
       <p>updatedAt: {win.updatedAt}</p>
       <p>screen count: {windows.length}</p>
       <p>balls count: {balls.length}</p>
+      <div className="buttons">
+        <button onClick={clearAllBalls}>Remove All balls</button>
+        <button onClick={(e) => addBall(e)}>Add a ball</button>
+      </div>
     </div>
   );
 };

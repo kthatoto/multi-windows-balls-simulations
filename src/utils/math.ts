@@ -3,6 +3,8 @@ interface Vector {
   y: number;
 }
 
+export const random = (start: number, end: number) => (start + (Math.random() * (end - start)));
+
 // 2点間の距離
 export const distance = (x1: number, y1: number, x2: number, y2: number) => {
   return Math.sqrt(Math.pow((x1 - x2), 2) + Math.pow((y1 - y2), 2));

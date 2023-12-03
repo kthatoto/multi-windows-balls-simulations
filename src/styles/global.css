@@ -20,4 +20,14 @@
 .console {
   padding: 20px;
   font-size: 20px;
+  .buttons {
+    display: flex;
+    flex-direction: column;
+    width: 200px;
+    gap: 8px;
+
+    > button {
+      height: 40px;
+    }
+  }
 }
