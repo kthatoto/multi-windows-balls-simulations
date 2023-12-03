@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { BALL_INTERVAL } from "@/constants";
 import { Ball, Window } from "@/types";
 import { useInterval } from "@/hooks/useInterval";
 import { getBalls, updateBalls } from "@/models/ball";
@@ -17,7 +18,7 @@ export const useObserveBalls = (windows: Window[], currentWindow?: Window) => {
         updateBalls(newBalls);
       }
     },
-    10
+    BALL_INTERVAL
   );
 
   return { balls };

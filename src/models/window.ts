@@ -1,4 +1,5 @@
 import { db } from "@/database";
+import { CLEAR_WINDOW_INTERVAL } from "@/constants";
 import { Window } from "@/types";
 
 export const getWindows = async () => {
@@ -45,7 +46,7 @@ export const updateMainWindowIfNeeded = async () => {
 };
 
 export const clearUnusedWindows = () => {
-  const border = Date.now() - 1000;
+  const border = Date.now() - CLEAR_WINDOW_INTERVAL;
   db.windows.where('updatedAt').below(border).delete();
 };
 
