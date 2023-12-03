@@ -30,7 +30,7 @@ export const useObserveWindow = () => {
       }
       setWindows(await getWindows());
     },
-    1000
+    500
   );
 
   return { win, windows };

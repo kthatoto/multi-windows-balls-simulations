@@ -65,6 +65,7 @@ export const moveBall = (windows: Window[], ball: Ball) => {
       updatedAt: Date.now(),
     };
   } else if (status === BORDER_COLLISION) {
+
     /* 雑コード */
     const centerWindow = windows.find((w) =>
       w.pos.x <= newPos.x && newPos.x <= w.pos.x + w.size.width &&

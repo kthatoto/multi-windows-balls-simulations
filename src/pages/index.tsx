@@ -18,6 +18,7 @@ const Index = () => {
             <p>collisionIds: [{win.collisionIds?.join(",")}]</p>
             <p>createdAt: {win.createdAt}</p>
             <p>updatedAt: {win.updatedAt}</p>
+            <p>screen count: {windows.length}</p>
           </>
         )}
       </div>
