@@ -12,9 +12,9 @@ const COLLISION_BOTH = "collision_both";
 
 const windowCollision = (ball: Ball, win: Window) => {
   const winLeft = win.pos.x;
-  const winRight = win.pos.x + win.size.width;
+  const winRight = win.pos.x + win.size.outer.width;
   const winTop = win.pos.y;
-  const winBottom = win.pos.y + win.size.height;
+  const winBottom = win.pos.y + win.size.outer.height;
 
   const innerHorizontal = winLeft < ball.pos.x - ball.radius && ball.pos.x + ball.radius < winRight;
   const innerVertical = winTop < ball.pos.y - ball.radius && ball.pos.y + ball.radius < winBottom;
@@ -50,8 +50,8 @@ export const moveBall = (windows: Window[], ball: Ball) => {
   const win = windows.find((w) =>
     w.id === newBall.currentWindowId ||
       (
-        w.pos.x <= newPos.x && newPos.x <= w.pos.x + w.size.width &&
-        w.pos.y <= newPos.y && newPos.y <= w.pos.y + w.size.height
+        w.pos.x <= newPos.x && newPos.x <= w.pos.x + w.size.outer.width &&
+        w.pos.y <= newPos.y && newPos.y <= w.pos.y + w.size.outer.height
       )
   )!;
 
@@ -68,8 +68,8 @@ export const moveBall = (windows: Window[], ball: Ball) => {
 
     /* 雑コード */
     const centerWindow = windows.find((w) =>
-      w.pos.x <= newPos.x && newPos.x <= w.pos.x + w.size.width &&
-      w.pos.y <= newPos.y && newPos.y <= w.pos.y + w.size.height
+      w.pos.x <= newPos.x && newPos.x <= w.pos.x + w.size.outer.width &&
+      w.pos.y <= newPos.y && newPos.y <= w.pos.y + w.size.outer.height
     );
     const currentWindowId = centerWindow?.id;
 

@@ -11,7 +11,10 @@ export const touchWindow = async (windowId: string) => {
     const newWindow = {
       ...existingWindow,
       pos: { x: window.screenX, y: window.screenY },
-      size: { width: window.outerWidth, height: window.outerHeight },
+      size: {
+        outer: { width: window.outerWidth, height: window.outerHeight },
+        inner: { width: window.innerWidth, height: window.innerHeight },
+      },
       updatedAt: Date.now(),
     };
     await db.windows.put(newWindow);
@@ -20,7 +23,10 @@ export const touchWindow = async (windowId: string) => {
   const newWindow = {
     id: windowId,
     pos: { x: window.screenX, y: window.screenY },
-    size: { width: window.outerWidth, height: window.outerHeight },
+    size: {
+      outer: { width: window.outerWidth, height: window.outerHeight },
+      inner: { width: window.innerWidth, height: window.innerHeight },
+    },
     main: 0 as const,
     collisionIds: [],
     createdAt: Date.now(),
@@ -62,17 +68,17 @@ export const updateWindowsCollision = async () => {
 
 const windowsCollision = (win1: Window, win2: Window) => {
   const win1Left = win1.pos.x - 1;
-  const win1Right = win1.pos.x + win1.size.width + 1;
+  const win1Right = win1.pos.x + win1.size.outer.width + 1;
   const win2Left = win2.pos.x;
-  const win2Right = win2.pos.x + win2.size.width;
+  const win2Right = win2.pos.x + win2.size.outer.width;
 
   const horizontalCollision = win1Left <= win2Right && win2Left <= win1Right;
   if (!horizontalCollision) return false;
 
   const win1Top = win1.pos.y - 1;
-  const win1Bottom = win1.pos.y + win1.size.height + 1;
+  const win1Bottom = win1.pos.y + win1.size.outer.height + 1;
   const win2Top = win2.pos.y;
-  const win2Bottom = win2.pos.y + win2.size.height;
+  const win2Bottom = win2.pos.y + win2.size.outer.height;
 
   const verticalCollision = win1Top <= win2Bottom && win2Top <= win1Bottom;
   if (!verticalCollision) return false;

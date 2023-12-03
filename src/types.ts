@@ -18,7 +18,10 @@ export interface Rect {
 export interface Window {
   id: string;
   pos: Vector;
-  size: Size;
+  size: {
+    outer: Size;
+    inner: Size;
+  };
   main: 0 | 1;
   collisionIds: string[];
   createdAt: number;
