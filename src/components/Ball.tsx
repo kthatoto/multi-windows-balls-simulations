@@ -8,7 +8,7 @@ const BallComponent = (params: { win: Window, ball: Ball }) => {
       style={{
         width: ball.radius * 2,
         height: ball.radius * 2,
-        top: -win.pos.y + ball.pos.y - ball.radius,
+        top: -win.pos.y + ball.pos.y - ball.radius - (win.size.outer.height - win.size.inner.height),
         left: -win.pos.x + ball.pos.x - ball.radius,
       }}
     />
