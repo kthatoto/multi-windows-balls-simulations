@@ -18,7 +18,7 @@ const Console = (props: { win?: Window, windows: Window[], balls: Ball[] }) => {
       <p>balls count: {balls.length}</p>
       <div className="buttons">
         <button onClick={clearAllBalls}>Remove All balls</button>
-        <button onClick={(e) => addBall(e)}>Add a ball</button>
+        <button onClick={(e) => addBall(win, e)}>Add a ball</button>
       </div>
     </div>
   );
