@@ -1,3 +1,1 @@
-import { Rect } from "@/types";
-
-export const RECTANGLES: Rect[] = [];
+export const WINDOW_INTERVAL = 1000;

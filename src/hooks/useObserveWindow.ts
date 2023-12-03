@@ -1,4 +1,5 @@
 import { useEffect, useState } from "react";
+import { WINDOW_INTERVAL } from "@/constants";
 import { useInterval } from "@/hooks/useInterval";
 import {
   getWindows,
@@ -30,7 +31,7 @@ export const useObserveWindow = () => {
       }
       setWindows(await getWindows());
     },
-    500
+    WINDOW_INTERVAL
   );
 
   return { win, windows };
