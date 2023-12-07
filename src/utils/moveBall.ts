@@ -125,5 +125,7 @@ export const moveBall = (windows: Window[], ball: Ball) => {
       currentWindowId,
       updatedAt: Date.now(),
     };
+  } else {
+    throw new Error('invalid collision');
   }
 };
