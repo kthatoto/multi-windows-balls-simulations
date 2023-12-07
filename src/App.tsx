@@ -3,7 +3,7 @@ import Console from "@/components/Console";
 import { useObserveWindow } from "@/hooks/useObserveWindow";
 import { useObserveBalls } from "@/hooks/useObserveBalls";
 
-const Index = () => {
+const App = () => {
   const { win, windows } = useObserveWindow();
   const { balls } = useObserveBalls(windows, win);
 
@@ -16,4 +16,4 @@ const Index = () => {
     </div>
   );
 };
-export default Index;
+export default App;
