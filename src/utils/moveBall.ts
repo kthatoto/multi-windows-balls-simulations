@@ -68,22 +68,24 @@ export const moveBall = (windows: Window[], ball: Ball) => {
     return windowCollision(newBall, w).status === BORDER_COLLISION;
   });
 
+  const centerWindow = windows.find((w) =>
+    w.pos.x <= newPos.x && newPos.x <= w.pos.x + w.size.outer.width &&
+    w.pos.y <= newPos.y && newPos.y <= w.pos.y + w.size.outer.height
+  );
+  const currentWindowId = centerWindow?.id;
+
   if (!newWindow) {
+    console.log(status, collision);
     return {
       ...newBall,
       velocity: {
         x: velocity.x * (collision !== COLLISION_VERTICAL ? -1 : 1),
         y: velocity.y * (collision !== COLLISION_HORIZONTAL ? -1 : 1),
       },
+      currentWindowId,
       updatedAt: Date.now(),
     };
   }
-
-  const centerWindow = windows.find((w) =>
-    w.pos.x <= newPos.x && newPos.x <= w.pos.x + w.size.outer.width &&
-    w.pos.y <= newPos.y && newPos.y <= w.pos.y + w.size.outer.height
-  );
-  const currentWindowId = centerWindow?.id;
 
   const newColl = windowCollision(newBall, newWindow);
 
