@@ -62,44 +62,32 @@ export const moveBall = (windows: Window[], ball: Ball) => {
   }
 
   /* 雑コード */
-  const centerWindow = windows.find((w) =>
-    w.pos.x <= newPos.x && newPos.x <= w.pos.x + w.size.outer.width &&
-    w.pos.y <= newPos.y && newPos.y <= w.pos.y + w.size.outer.height
-  );
-  const currentWindowId = centerWindow?.id;
-
   const newWindow = windows.find((w) => {
     if (w.id === win.id) return false;
     if (!win.collisionIds.includes(w.id)) return false;
     return windowCollision(newBall, w).status === BORDER_COLLISION;
   });
 
-  if (collision === COLLISION_VERTICAL) {
-    return {
-      ...newBall,
-      velocity: {
-        x: velocity.x,
-        y: -velocity.y,
-      },
-      currentWindowId,
-      updatedAt: Date.now(),
-    };
-  }
-
   if (!newWindow) {
     return {
       ...newBall,
       velocity: {
-        x: -velocity.x,
-        y: velocity.y,
+        x: velocity.x * (collision !== COLLISION_VERTICAL ? -1 : 1),
+        y: velocity.y * (collision !== COLLISION_HORIZONTAL ? -1 : 1),
       },
-      currentWindowId,
       updatedAt: Date.now(),
     };
   }
-  const coll = windowCollision(newBall, newWindow);
 
-  if (coll.collision === COLLISION_BOTH) {
+  const centerWindow = windows.find((w) =>
+    w.pos.x <= newPos.x && newPos.x <= w.pos.x + w.size.outer.width &&
+    w.pos.y <= newPos.y && newPos.y <= w.pos.y + w.size.outer.height
+  );
+  const currentWindowId = centerWindow?.id;
+
+  const newColl = windowCollision(newBall, newWindow);
+
+  if (newColl.collision === COLLISION_BOTH) {
     return {
       ...newBall,
       velocity: {
@@ -109,7 +97,7 @@ export const moveBall = (windows: Window[], ball: Ball) => {
       currentWindowId,
       updatedAt: Date.now(),
     };
-  } else if (coll.collision === COLLISION_VERTICAL) {
+  } else if (newColl.collision === COLLISION_VERTICAL) {
     return {
       ...newBall,
       velocity: {
@@ -119,7 +107,7 @@ export const moveBall = (windows: Window[], ball: Ball) => {
       currentWindowId,
       updatedAt: Date.now(),
     };
-  } else if (coll.collision === COLLISION_HORIZONTAL) {
+  } else if (newColl.collision === COLLISION_HORIZONTAL) {
     return {
       ...newBall,
       currentWindowId,
