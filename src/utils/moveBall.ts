@@ -56,8 +56,10 @@ const ww = (win1: Window, win2: Window) => {
     bottom: win2.pos.y + win2.size.outer.height,
   };
 
-  const collisionHorizontal = ar2.left <= ar1.right && ar1.left <= ar2.right;
-  const collisionVertical = ar2.top <= ar1.bottom && ar1.top <= ar2.bottom;
+  const horizontalCollisionLength = Math.max(Math.min(ar1.right, ar2.right) - Math.max(ar1.left, ar2.left), 0);
+  const verticalCollisionLength = Math.max(Math.min(ar1.bottom, ar2.bottom) - Math.max(ar1.top, ar2.top), 0);
+
+  const collisionHorizontal = horizontalCollisionLength < verticalCollisionLength;
   const ar1IsLeft = ar1.left < ar2.left;
   const ar1IsTop = ar1.top < ar2.top;
 
@@ -68,7 +70,7 @@ const ww = (win1: Window, win2: Window) => {
     } else {
       ars.push(ar2, ar1);
     }
-  } else if (collisionVertical) {
+  } else {
     if (ar1IsTop) {
       ars.push(ar1, ar2);
     } else {
@@ -127,7 +129,7 @@ const ww = (win1: Window, win2: Window) => {
         bottom: sar1.bottom + RECT_LENGTH,
       });
     }
-  } else if (collisionVertical) {
+  } else {
     if (sar1.left < sar2.left) {
       obstacles.push({
         left: sar2.left - RECT_LENGTH,
