@@ -16,13 +16,13 @@ export const clearAllBalls = async () => {
 };
 
 export const addBall = async (win: Window, e: MouseEvent) => {
-  const velocityNorm = random(2, 5);
+  const velocityNorm = random(1, 3);
   const velocityRad = random(0, 2) * Math.PI;
   const now = Date.now();
 
   await db.balls.put({
     id: Math.random().toString(32).substring(2),
-    radius: random(30, 60),
+    radius: random(50, 80),
     pos: { x: win.pos.x + e.pageX, y: win.pos.y + e.pageY },
     velocity: {
       x: velocityNorm * Math.cos(velocityRad),
