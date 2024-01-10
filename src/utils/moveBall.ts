@@ -1,5 +1,5 @@
-import { Ball, Vector, Window, AbsoluteRect } from "@/types";
-// import { distance, reflectVectorAcrossLine } from "@/utils/math";
+import { Ball, Window, AbsoluteRect } from "@/types";
+import { distance, reflectVectorAcrossLine } from "@/utils/math";
 
 const RECT_LENGTH = 300;
 
@@ -173,13 +173,12 @@ const ww = (win1: Window, win2: Window) => {
         bottom: sar1.bottom + RECT_LENGTH,
       });
     }
-
-    return obstacles;
   }
+  return obstacles;
 };
 
 export const moveBall = (windows: Window[], ball: Ball) => {
-  const { pos, velocity } = ball;
+  const { pos, velocity, radius } = ball;
   const newPos = { x: pos.x + velocity.x, y: pos.y + velocity.y };
   const newBall = { ...ball, pos: newPos };
 
@@ -201,7 +200,7 @@ export const moveBall = (windows: Window[], ball: Ball) => {
   }
 
   /* 雑コード */
-  const newWindow = windows.find((w) => {
+  const newWin = windows.find((w) => {
     if (w.id === win.id) return false;
     if (!win.collisionIds.includes(w.id)) return false;
     return windowCollision(newBall, w).status === BORDER_COLLISION;
@@ -213,7 +212,7 @@ export const moveBall = (windows: Window[], ball: Ball) => {
   );
   const currentWindowId = centerWindow?.id;
 
-  if (!newWindow) {
+  if (!newWin) {
     return {
       ...newBall,
       velocity: {
@@ -225,38 +224,84 @@ export const moveBall = (windows: Window[], ball: Ball) => {
     };
   }
 
-  const newColl = windowCollision(newBall, newWindow);
-
-  // win -> coll
-  // newWin -> newColl
-
-  if (newColl.collision === COLLISION_BOTH) {
-    return {
-      ...newBall,
-      velocity: {
-        x: -velocity.x,
-        y: -velocity.y,
+  const newVelocity = { x: newBall.velocity.x, y: newBall.velocity.y };
+  const obstacles = ww(win, newWin);
+  obstacles.forEach((rect) => {
+    const overlaps = {
+      // 円の中心が矩形と重なっているか
+      center: {
+        horizontal: rect.left <= newPos.x && newPos.x <= rect.right,
+        vertical: rect.top <= newPos.y && newPos.y <= rect.bottom,
       },
-      currentWindowId,
-      updatedAt: Date.now(),
-    };
-  } else if (newColl.collision === COLLISION_VERTICAL) {
-    return {
-      ...newBall,
-      velocity: {
-        x: velocity.x,
-        y: -velocity.y,
+      // 円を囲む矩形が矩形と重なっているか
+      rect: {
+        horizontal: rect.left <= newPos.x + radius && newPos.x - radius <= rect.right,
+        vertical: rect.top <= newPos.y + radius && newPos.y - radius <= rect.bottom,
       },
-      currentWindowId,
-      updatedAt: Date.now(),
     };
-  } else if (newColl.collision === COLLISION_HORIZONTAL) {
-    return {
-      ...newBall,
-      currentWindowId,
-      updatedAt: Date.now(),
-    };
-  } else {
-    throw new Error('invalid collision');
-  }
+
+    const leftSide = newPos.x <= rect.left;
+    const rightSide = rect.right <= newPos.x;
+    const topSide = newPos.y <= rect.top;
+    const bottomSide = rect.bottom <= newPos.y;
+
+    if (overlaps.center.horizontal && overlaps.rect.vertical) {
+      if (topSide) {
+        // 上辺に衝突
+        newVelocity.y = Math.abs(velocity.y) * -1;
+      } else if (bottomSide) {
+        // 下辺に衝突
+        newVelocity.y = Math.abs(velocity.y);
+      }
+    } else if (overlaps.center.vertical && overlaps.rect.horizontal) {
+      if (leftSide) {
+        // 左辺に衝突
+        newVelocity.x = Math.abs(velocity.x) * -1;
+      } else if (rightSide) {
+        // 右辺に衝突
+        newVelocity.x = Math.abs(velocity.x);
+      }
+    } else if (
+      !overlaps.center.horizontal &&
+      !overlaps.center.vertical &&
+      overlaps.rect.horizontal &&
+      overlaps.rect.vertical
+    ) {
+      // 角に衝突
+      const cornerPoint = { x: -1, y: -1 };
+      if (leftSide) {
+        if (topSide) {
+          cornerPoint.x = rect.left;
+          cornerPoint.y = rect.top;
+        } else if (bottomSide) {
+          cornerPoint.x = rect.left;
+          cornerPoint.y = rect.bottom;
+        }
+      } else if (rightSide) {
+        if (topSide) {
+          cornerPoint.x = rect.right;
+          cornerPoint.y = rect.top;
+        } else if (bottomSide) {
+          cornerPoint.x = rect.right;
+          cornerPoint.y = rect.bottom;
+        }
+      }
+
+      if (distance(newPos.x, newPos.y, cornerPoint.x, cornerPoint.y) <= radius) {
+        const convertedVector = reflectVectorAcrossLine(
+          velocity,
+          { x: cornerPoint.x - newPos.x, y: cornerPoint.y - newPos.y },
+        );
+        newVelocity.x = convertedVector.x * -1;
+        newVelocity.y = convertedVector.y * -1;
+      }
+    }
+  });
+
+  return {
+    ...newBall,
+    velocity: newVelocity,
+    currentWindowId,
+    updatedAt: Date.now(),
+  };
 };
