@@ -6,16 +6,20 @@ export const getWindows = async () => {
   return await db.windows.toArray();
 };
 
+const MARGIN = 1;
+
 export const touchWindow = async (windowId: string) => {
   const existingWindow = await db.windows.get(windowId);
+  const pos = { x: window.screenX - MARGIN, y: window.screenY - MARGIN };
+  const size = {
+    outer: { width: window.outerWidth + (MARGIN * 2), height: window.outerHeight + (MARGIN * 2) },
+    inner: { width: window.innerWidth, height: window.innerHeight },
+  };
   if (existingWindow) {
     const newWindow = {
       ...existingWindow,
-      pos: { x: window.screenX, y: window.screenY },
-      size: {
-        outer: { width: window.outerWidth, height: window.outerHeight },
-        inner: { width: window.innerWidth, height: window.innerHeight },
-      },
+      pos,
+      size,
       updatedAt: Date.now(),
     };
     await db.windows.put(newWindow);
@@ -23,11 +27,8 @@ export const touchWindow = async (windowId: string) => {
   }
   const newWindow = {
     id: windowId,
-    pos: { x: window.screenX, y: window.screenY },
-    size: {
-      outer: { width: window.outerWidth, height: window.outerHeight },
-      inner: { width: window.innerWidth, height: window.innerHeight },
-    },
+    pos,
+    size,
     main: 0 as const,
     collisionIds: [],
     createdAt: Date.now(),
