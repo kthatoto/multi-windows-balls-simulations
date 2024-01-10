@@ -15,6 +15,13 @@ export interface Rect {
   height: number;
 }
 
+export interface AbsoluteRect {
+  left: number;
+  right: number;
+  top: number;
+  bottom: number;
+}
+
 export interface Window {
   id: string;
   pos: Vector;
