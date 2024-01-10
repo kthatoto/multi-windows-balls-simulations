@@ -199,7 +199,6 @@ export const moveBall = (windows: Window[], ball: Ball) => {
     return { ...ball, currentWindowId: otherWindow?.id };
   }
 
-  /* 雑コード */
   const newWin = windows.find((w) => {
     if (w.id === win.id) return false;
     if (!win.collisionIds.includes(w.id)) return false;
