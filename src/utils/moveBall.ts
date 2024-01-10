@@ -42,34 +42,34 @@ const windowCollision = (ball: Ball, win: Window) => {
   };
 };
 
-// const ww = (win1: Window, win2: Window, ball: Ball) => {
-//   const win1Left = win1.pos.x - 1;
-//   const win1Right = win1.pos.x + win1.size.outer.width + 1;
-//   const win1Top = win1.pos.y - 1;
-//   const win1Bottom = win1.pos.y + win1.size.outer.height + 1;
-//   const win2Left = win2.pos.x;
-//   const win2Right = win2.pos.x + win2.size.outer.width;
-//   const win2Top = win2.pos.y;
-//   const win2Bottom = win2.pos.y + win2.size.outer.height;
-//
-//   const collisionHorizontal = win2Left <= win1Right && win1Left <= win2Right;
-//   const collisionVertical = win2Top <= win1Bottom && win1Top <= win2Bottom;
-//   const win1IsLeft = win1Left < win2Left;
-//   const win1IsTop = win1Top < win2Top;
-//
-//   if (collisionHorizontal) {
-//     const rect1Bottom = Math.max(win1Top, win2Top) - RECT_LENGTH;
-//     let rect1Vertical: number;
-//     if (win1Top === win2Top) {
-//       rect1Vertical = (win1IsLeft ? win1Right : win1Left) - RECT_LENGTH / 2;
-//     } else if (win1Top > win2Top) {
-//       rect1Vertical = win1IsLeft ? win1Right - RECT_LENGTH : win1Left;
-//     } else {
-//       rect1Vertical = win1IsLeft ? win1Left : win1Right - RECT_LENGTH;
-//     }
-//   } else if (collisionVertical) {
-//   }
-// };
+const ww = (win1: Window, win2: Window, ball: Ball) => {
+  const win1Left = win1.pos.x - 1;
+  const win1Right = win1.pos.x + win1.size.outer.width + 1;
+  const win1Top = win1.pos.y - 1;
+  const win1Bottom = win1.pos.y + win1.size.outer.height + 1;
+  const win2Left = win2.pos.x;
+  const win2Right = win2.pos.x + win2.size.outer.width;
+  const win2Top = win2.pos.y;
+  const win2Bottom = win2.pos.y + win2.size.outer.height;
+
+  const collisionHorizontal = win2Left <= win1Right && win1Left <= win2Right;
+  const collisionVertical = win2Top <= win1Bottom && win1Top <= win2Bottom;
+  const win1IsLeft = win1Left < win2Left;
+  const win1IsTop = win1Top < win2Top;
+
+  if (collisionHorizontal) {
+    const rect1Bottom = Math.max(win1Top, win2Top) - RECT_LENGTH;
+    let rect1Vertical: number;
+    if (win1Top === win2Top) {
+      rect1Vertical = (win1IsLeft ? win1Right : win1Left) - RECT_LENGTH / 2;
+    } else if (win1Top > win2Top) {
+      rect1Vertical = win1IsLeft ? win1Right - RECT_LENGTH : win1Left;
+    } else {
+      rect1Vertical = win1IsLeft ? win1Left : win1Right - RECT_LENGTH;
+    }
+  } else if (collisionVertical) {
+  }
+};
 
 export const moveBall = (windows: Window[], ball: Ball) => {
   const { pos, velocity } = ball;
