@@ -12,8 +12,8 @@ const COLLISION_HORIZONTAL = "COLLISION_HORIZONTAL";
 const COLLISION_VERTICAL = "COLLISION_VERTICAL";
 const COLLISION_BOTH = "COLLISION_BOTH";
 
-const windowCollision = (ball: Ball, win: Window) => {
-  const radius = ball.radius + 1;
+const windowCollision = (ball: Ball, win: Window, outer?: boolean) => {
+  const radius = ball.radius + 1 + (outer ? 1 : 0);
   const winLeft = win.pos.x;
   const winRight = win.pos.x + win.size.outer.width;
   const winTop = win.pos.y;
@@ -202,7 +202,7 @@ export const moveBall = (windows: Window[], ball: Ball) => {
   const newWin = windows.find((w) => {
     if (w.id === win.id) return false;
     if (!win.collisionIds.includes(w.id)) return false;
-    return windowCollision(newBall, w).status === BORDER_COLLISION;
+    return windowCollision(newBall, w, true).status === BORDER_COLLISION;
   });
 
   const centerWindow = windows.find((w) =>
