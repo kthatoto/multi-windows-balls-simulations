@@ -7,8 +7,8 @@ const Console = (props: { win?: Window, windows: Window[], balls: Ball[] }) => {
   return (
     <div className="console">
       <div className="buttons">
-        <button onClick={clearAllBalls}>Remove All balls</button>
-        <button onClick={(e) => addBall(win, e)}>Add a ball</button>
+        <button onClick={clearAllBalls}>Remove All DVDs</button>
+        <button onClick={(e) => addBall(win, e)}>Add DVD</button>
       </div>
       <p>id: {win.id}</p>
       <p>pos: (x: {win.pos.x}, y: {win.pos.y})</p>
