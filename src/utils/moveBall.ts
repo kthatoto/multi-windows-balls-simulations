@@ -214,8 +214,6 @@ export const moveBall = (windows: Window[], ball: Ball) => {
   );
   const currentWindowId = centerWindow?.id;
 
-  newBall.colorIndex = Math.floor(random(0, COLOR_NUMBER));
-
   if (!newWin) {
     return {
       ...newBall,
@@ -225,6 +223,7 @@ export const moveBall = (windows: Window[], ball: Ball) => {
       },
       currentWindowId,
       updatedAt: Date.now(),
+      colorIndex: Math.floor(random(0, COLOR_NUMBER)),
     };
   }
 
@@ -301,6 +300,10 @@ export const moveBall = (windows: Window[], ball: Ball) => {
       }
     }
   });
+
+  if (newVelocity.x !== velocity.x || newVelocity.y !== velocity.y) {
+    newBall.colorIndex = Math.floor(random(0, COLOR_NUMBER));
+  }
 
   return {
     ...newBall,
