@@ -10,11 +10,17 @@
   height: 100vh;
   background-color: #eee;
 }
+.app.dvd {
+  background-color: black;
+}
 
 .ball {
   position: absolute;
   border-radius: 50%;
   border: 3px solid red;
+}
+.dvd .ball {
+  border: none;
 }
 
 .console {
@@ -28,6 +34,7 @@
 
     > button {
       height: 40px;
+      cursor: pointer;
     }
   }
 }

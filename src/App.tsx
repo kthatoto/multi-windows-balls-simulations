@@ -1,3 +1,4 @@
+import { useMemo } from "react";
 import Ball from "@/components/Ball";
 import Console from "@/components/Console";
 import { useConsole } from "@/hooks/useConsole";
@@ -9,8 +10,13 @@ const App = () => {
   const { win, windows } = useObserveWindow();
   const { balls } = useObserveBalls(windows, win);
 
+  const rootClasses = useMemo(() => {
+    if (mode === "dvd") return "app dvd";
+    return "app";
+  }, [mode]);
+
   return (
-    <div className="app">
+    <div className={rootClasses}>
       <Console
         win={win}
         windows={windows}
@@ -21,7 +27,7 @@ const App = () => {
         setDebug={setDebug}
       />
       {win && balls.map((ball) => (
-        <Ball key={ball.id} win={win} ball={ball} />
+        <Ball key={ball.id} win={win} ball={ball} mode={mode} />
       ))}
     </div>
   );
