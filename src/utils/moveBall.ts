@@ -1,5 +1,6 @@
 import { Ball, Window, AbsoluteRect } from "@/types";
-import { distance, reflectVectorAcrossLine } from "@/utils/math";
+import { distance, reflectVectorAcrossLine, random } from "@/utils/math";
+import { COLOR_NUMBER } from "@/constants";
 
 const RECT_LENGTH = 300;
 
@@ -212,6 +213,8 @@ export const moveBall = (windows: Window[], ball: Ball) => {
     w.pos.y <= newPos.y && newPos.y <= w.pos.y + w.size.outer.height
   );
   const currentWindowId = centerWindow?.id;
+
+  newBall.colorIndex = Math.floor(random(0, COLOR_NUMBER));
 
   if (!newWin) {
     return {
