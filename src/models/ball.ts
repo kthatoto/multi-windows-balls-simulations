@@ -19,6 +19,7 @@ export const addBall = async (win: Window, e: MouseEvent) => {
   const velocityNorm = random(1, 3);
   const velocityRad = random(0, 2) * Math.PI;
   const now = Date.now();
+  const colorIndex = Math.floor(random(0, 6));
 
   await db.balls.put({
     id: Math.random().toString(32).substring(2),
@@ -30,5 +31,6 @@ export const addBall = async (win: Window, e: MouseEvent) => {
     },
     createdAt: now,
     updatedAt: now,
+    colorIndex,
   });
 };

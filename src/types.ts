@@ -43,4 +43,5 @@ export interface Ball {
   createdAt: number;
   updatedAt: number;
   currentWindowId?: string;
+  colorIndex: number;
 }
