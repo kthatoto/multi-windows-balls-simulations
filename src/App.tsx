@@ -4,6 +4,7 @@ import Console from "@/components/Console";
 import { useConsole } from "@/hooks/useConsole";
 import { useObserveWindow } from "@/hooks/useObserveWindow";
 import { useObserveBalls } from "@/hooks/useObserveBalls";
+import { addBall } from "@/models/ball";
 
 const App = () => {
   const { mode, debug, setMode, setDebug } = useConsole();
@@ -16,7 +17,10 @@ const App = () => {
   }, [mode]);
 
   return (
-    <div className={rootClasses}>
+    <div
+      className={rootClasses}
+      onClick={(e) => win && addBall(win, e)}
+    >
       <Console
         win={win}
         windows={windows}

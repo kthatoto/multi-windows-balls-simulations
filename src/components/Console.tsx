@@ -1,5 +1,6 @@
+import { MouseEvent, useCallback } from "react";
 import { Ball, Window } from "@/types";
-import { clearAllBalls, addBall } from "@/models/ball";
+import { clearAllBalls } from "@/models/ball";
 import { Mode } from "@/hooks/useConsole";
 
 interface Props {
@@ -23,12 +24,16 @@ const Console = (props: Props) => {
     setDebug,
   } = props;
 
+  const clear = useCallback((e: MouseEvent) => {
+    e.stopPropagation();
+    clearAllBalls();
+  }, []);
+
   if (!win) return null;
   return (
     <div className="console">
       <div className="buttons">
-        <button onClick={clearAllBalls}>Remove All balls</button>
-        <button onClick={(e) => addBall(win, e)}>Add a ball</button>
+        <button onClick={clear}>Remove All balls</button>
         <button onClick={() => setDebug(!debug)}>Toggle debug</button>
         {mode === "normal" && (
           <button onClick={() => setMode("dvd")}>DVD mode</button>

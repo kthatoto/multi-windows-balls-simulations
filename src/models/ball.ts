@@ -25,7 +25,10 @@ export const addBall = async (win: Window, e: MouseEvent) => {
   await db.balls.put({
     id: Math.random().toString(32).substring(2),
     radius: random(50, 80),
-    pos: { x: win.pos.x + e.pageX, y: win.pos.y + e.pageY },
+    pos: {
+      x: win.pos.x + e.pageX,
+      y: win.pos.y + e.pageY + win.size.outer.height - win.size.inner.height,
+    },
     velocity: {
       x: velocityNorm * Math.cos(velocityRad),
       y: velocityNorm * Math.sin(velocityRad),
